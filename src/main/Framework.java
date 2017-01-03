@@ -1,0 +1,20 @@
+package main;
+
+import players.GamePlayer;
+import players.GoComputerPlayer0;
+import players.GoHumanPlayer;
+
+public class Framework {
+	
+	public static void main(String[] args){
+		new GoLocalGame().start(setupPlayers());
+	}
+
+	private static GamePlayer[] setupPlayers(){
+		String[] names = {"Human", "Computer"};
+		GoHumanPlayer p1 = new GoHumanPlayer(names[0]);
+		GoComputerPlayer0 p2 = new GoComputerPlayer0(names[1]);
+		GamePlayer[] players = {p1, p2};
+		return players;
+	}
+}
