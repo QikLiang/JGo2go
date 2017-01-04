@@ -64,7 +64,7 @@ public abstract class GamePlayer {
 	 */
 	private class PlayerThread extends Thread{
 		public void run(){
-			while (true){
+			while (!gameOver){
 				GameInfo myInfo;
 				try {
 					myInfo = queue.take();

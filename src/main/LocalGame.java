@@ -214,6 +214,11 @@ public abstract class LocalGame implements Game{
 				playersFinished[playerIdx] = true;
 				playerFinishedCount++;
 			}
+			
+			//end game thread when all players acknowledged the game is over
+			if(playerFinishedCount == players.length){
+				running = false;
+			}
 		}
 	}
 	
@@ -333,7 +338,7 @@ public abstract class LocalGame implements Game{
 	 */
 	private class GameThread extends Thread {
 		public void run(){
-			while(true){
+			while(running){
 				try {
 					receiveMessage(queue.take());
 				} catch (InterruptedException e) {
