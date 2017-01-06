@@ -48,7 +48,7 @@ public abstract class GamePlayer {
 	
 	// start the player
 	public void start(){
-		pt.run();
+		pt.start();
 	}
 	
 	// whether this player requires a GUI
@@ -56,6 +56,12 @@ public abstract class GamePlayer {
 	
 	// whether this player supports a GUI
 	public abstract boolean supportsGui();
+
+	protected void initAfterReady() {
+		//overwritten by sub-class
+		
+	}
+
 
 	/**
 	 * Thread for dispatching info from game
@@ -76,7 +82,7 @@ public abstract class GamePlayer {
 					// game has not been bound: the only thing we're looking for is
 					// BindGameInfo object; ignore everything else
 					if (myInfo instanceof BindGameInfo) {
-						Log.i("GameHumanPlayer", "binding game");
+						Log.i("GamePlayer", "binding game");
 						BindGameInfo bgs = (BindGameInfo)myInfo;
 						game = bgs.getGame(); // set the game
 						playerNum = bgs.getPlayerNum(); // set our player id
@@ -89,13 +95,13 @@ public abstract class GamePlayer {
 					// here, the only thing we're looking for is a StartGameInfo object;
 					// ignore everything else
 					if (myInfo instanceof StartGameInfo) {
-						Log.i("GameHumanPlayer", "notification to start game");
+						Log.i("GamePlayer", "notification to start game");
 						
 						// update our player-name array
 						allPlayerNames = ((StartGameInfo)myInfo).getPlayerNames();
 
 						// perform game-specific initialization
-						//initAfterReady();
+						initAfterReady();
 						
 						// tell the game we're ready to play the game
 						game.sendAction(new ReadyAction(GamePlayer.this));

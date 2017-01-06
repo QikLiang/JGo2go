@@ -8,7 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import main.Game;
 import main.GoGameState;
+import players.GamePlayer;
 
 public class GameGraphics extends JFrame {
 	/**
@@ -20,9 +22,17 @@ public class GameGraphics extends JFrame {
 	JLabel captured0;//stones captured by player 0
 	JLabel captured1;//stones captured by player 1
 	
-	public GameGraphics(String[] names){
+	//variables to send actions to game
+	Game game;
+	GamePlayer player;
+	
+	public GameGraphics(String[] names, Game initGame, GamePlayer initPlayer){
 		super("Go2go");
-		board = new BoardGraphics();
+
+		game = initGame;
+		player = initPlayer;
+
+		board = new BoardGraphics(game, player);
 		JPanel panel = new JPanel();//exterior JPanel to setup layout
 		Box stats = Box.createHorizontalBox();
 		Box p0Stat = Box.createVerticalBox();
@@ -55,12 +65,7 @@ public class GameGraphics extends JFrame {
 		p1Stat.add(Box.createVerticalGlue());
 		p1Stat.add(captured1);
 		p1Stat.add(Box.createVerticalGlue());
-	}
-	
-	/**
-	 * display the GUI when it's ready
-	 */
-	public void startGraphics(){
+
 		setSize(BoardGraphics.SIZE,BoardGraphics.SIZE+100);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

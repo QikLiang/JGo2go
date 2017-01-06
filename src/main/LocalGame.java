@@ -86,7 +86,7 @@ public abstract class LocalGame implements Game{
 			
 			// create a thread that loops, waiting for actions;
 			// start the thread
-			gt.run();
+			gt.start();
 		}
 		
 		// at this point the game is running, so set our game stage to be that of

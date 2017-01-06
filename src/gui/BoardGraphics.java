@@ -12,8 +12,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import main.Game;
 import main.GoGameState;
 import main.Log;
+import players.GamePlayer;
 
 class BoardGraphics extends JPanel implements MouseListener {
 	
@@ -34,7 +36,14 @@ class BoardGraphics extends JPanel implements MouseListener {
 	private int prevX = -1;
 	private int prevY = -1;
 	
-	BoardGraphics(){
+	//variables to send actions to game
+	Game game;
+	GamePlayer player;
+	
+	BoardGraphics( Game initGame, GamePlayer initPlayer ){
+		game = initGame;
+		player = initPlayer;
+
 		try {
 			texture = ImageIO.read(getClass().getResource("/goodwood.jpg"));
 		} catch (IOException e) {

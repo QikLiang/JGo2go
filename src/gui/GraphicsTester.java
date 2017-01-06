@@ -10,9 +10,9 @@ import main.Log;
  */
 public class GraphicsTester {
 	public static void main(String[] args){
+		/*
 		String[] asdf = {"asdf", "fdsa"};
 		GameGraphics gg = new GameGraphics(asdf);
-		gg.startGraphics();
 		GoGameState state = new GoGameState();
 		gg.setState(state);
 		try { Thread.sleep(2000); } catch (InterruptedException e) { }
@@ -24,6 +24,7 @@ public class GraphicsTester {
 		try { Thread.sleep(2000); } catch (InterruptedException e) { }
 		state.updateBoard(0, 1, 0);
 		gg.setState(state);
+		*/
 	}
 
 }

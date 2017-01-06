@@ -1,21 +1,20 @@
 package players;
 
 import action.GameAction;
-import main.Game;
 import main.GoGameState;
 import gameMsg.GameInfo;
 import gameMsg.IllegalMoveInfo;
 import gameMsg.NotYourTurnInfo;
+import gui.GameGraphics;
 
 /**
  * Created by qi on 10/29/16.
  */
 
-public class GoHumanPlayer extends GamePlayer{// implements View.OnTouchListener, View.OnClickListener {
+public class GoHumanPlayer extends GamePlayer{
 
     boolean firstTime = true;
-    //GoSurfaceView surfaceView;
-    GoGameState state;
+    GameGraphics graphics;
 
     public GoHumanPlayer(String name) {
         super(name);
@@ -34,15 +33,23 @@ public class GoHumanPlayer extends GamePlayer{// implements View.OnTouchListener
             return;
         }
 
-        state = (GoGameState) info;
+        GoGameState state = (GoGameState) info;
 
         if(state.getStage() == GoGameState.SELECT_TERRITORY_STAGE || state.getStage() == GoGameState.AGREE_TERRITORY_STAGE){
             if(state.getTerritoryProposal() == null){
                 state.setTerritoryProposal(state.getTerritorySuggestion());
             }
         }
+        
+        if(graphics!=null){
+			graphics.setState(state);
+        }
     }
 
+	@Override
+    protected void initAfterReady(){
+    	graphics = new GameGraphics(allPlayerNames, game, this);
+    }
 
 	@Override
 	public boolean requiresGui() {

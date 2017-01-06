@@ -19,10 +19,15 @@ public class GoLocalGame extends LocalGame {
 	// the players' names, paralleling the 'players' array
 	protected String[] playerNames;
 
-    GoGameState officialState = new GoGameState();
+    GoGameState officialState;
     private boolean gameEnded;
     private boolean forfeit = false;
     private static boolean reset=false;
+    
+    public GoLocalGame(){
+    	super();
+    	officialState = new GoGameState();
+    }
     
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
