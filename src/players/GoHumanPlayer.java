@@ -48,7 +48,7 @@ public class GoHumanPlayer extends GamePlayer{
 
 	@Override
     protected void initAfterReady(){
-    	graphics = new GameGraphics(allPlayerNames, game, this);
+    	graphics = new GameGraphics(allPlayerNames, game, this, playerNum);
     }
 
 	@Override

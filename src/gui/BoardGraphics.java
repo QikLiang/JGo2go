@@ -12,6 +12,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import action.PutPieceAction;
 import main.Game;
 import main.GoGameState;
 import main.Log;
@@ -36,14 +37,11 @@ class BoardGraphics extends JPanel implements MouseListener {
 	private int prevX = -1;
 	private int prevY = -1;
 	
-	//variables to send actions to game
-	Game game;
-	GamePlayer player;
+	private GameGraphics parent;
 	
-	BoardGraphics( Game initGame, GamePlayer initPlayer ){
-		game = initGame;
-		player = initPlayer;
-
+	BoardGraphics(GameGraphics parent){
+		this.parent = parent;
+		
 		try {
 			texture = ImageIO.read(getClass().getResource("/goodwood.jpg"));
 		} catch (IOException e) {
@@ -56,40 +54,56 @@ class BoardGraphics extends JPanel implements MouseListener {
 		if (texture != null){
 			Log.i("BoardGraphics", "drawing");
 			g.drawImage(texture, 0 ,0, SIZE, SIZE, null);
+		}
 			
-			//board grid
-			Graphics2D g2 = (Graphics2D) g;
-			g2.setStroke(new BasicStroke(3));
-			for(int i = 2*radius; i<SIZE-radius; i+=2*radius){
-				g2.drawLine(2*radius, i, SIZE - 2*radius, i);
-				g2.drawLine(i, 2*radius, i, SIZE - 2*radius);
-			}
-			
-			//pieces
-			if(goBoard == null){
-				return;
-			}
-			for(int x = 0; x<GoGameState.boardSize; x++){
-				for (int y=0; y<GoGameState.boardSize; y++){
-					switch (goBoard[x][y]){
-					case GoGameState.BLACK:
-						g.setColor(Color.BLACK);
-						g.fillOval( (2*x+1)*radius, (2*y+1)*radius, 2*radius, 2*radius );
-						break;
-					case GoGameState.WHITE:
-						g.setColor(Color.WHITE);
-						g.fillOval( (2*x+1)*radius, (2*y+1)*radius, 2*radius, 2*radius );
-						break;
-					}
+		//board grid
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(3));
+		for(int i = 2*radius; i<SIZE-radius; i+=2*radius){
+			g2.drawLine(2*radius, i, SIZE - 2*radius, i);
+			g2.drawLine(i, 2*radius, i, SIZE - 2*radius);
+		}
+		
+		//pieces on board
+		if(goBoard == null){
+			return;
+		}
+		for(int x = 0; x<GoGameState.boardSize; x++){
+			for (int y=0; y<GoGameState.boardSize; y++){
+				//pieces
+				switch (goBoard[x][y]){
+				case GoGameState.BLACK:
+					g.setColor(Color.BLACK);
+					g.fillOval( (2*x+1)*radius, (2*y+1)*radius, 2*radius, 2*radius );
+					break;
+				case GoGameState.WHITE:
+					g.setColor(Color.WHITE);
+					g.fillOval( (2*x+1)*radius, (2*y+1)*radius, 2*radius, 2*radius );
+					break;
 				}
-			}
-			
-			//previous move
-			if(prevX>=0){
-				g.setColor(Color.gray);
-				g.fillOval( (2*prevX+1)*radius+2*radius/3, (2*prevY+1)*radius+2*radius/3, 2*radius/3, 2*radius/3 );
+				
+				//proposal
+				if(proposal==null){
+                    continue;
+                }
+                if (proposal[x][y]>0){
+                    g.setColor(Color.BLACK);
+					g.fillOval( (2*x+1)*radius+2*radius/3, (2*y+1)*radius+2*radius/3, 2*radius/3, 2*radius/3 );
+                }else if (proposal[x][y]<0) {
+                    g.setColor(Color.WHITE);
+					g.fillOval( (2*x+1)*radius+2*radius/3, (2*y+1)*radius+2*radius/3, 2*radius/3, 2*radius/3 );
+                }
 			}
 		}
+		
+		//previous move
+		if(prevX>=0){
+			g.setColor(Color.gray);
+			g.fillOval( (2*prevX+1)*radius+2*radius/3, (2*prevY+1)*radius+2*radius/3, 2*radius/3, 2*radius/3 );
+		}
+		
+		//proposal
+		
 	}
 
 	public void setGoBoard(int[][] goBoard) {
@@ -122,7 +136,9 @@ class BoardGraphics extends JPanel implements MouseListener {
 		if (x>=GoGameState.boardSize || y>=GoGameState.boardSize){
 			return;
 		}
-		Log.i("BoardGraphics clicked", x+","+y);
+		
+		parent.sendAction(x, y);
+		repaint();
 	}
 
 	@Override

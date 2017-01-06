@@ -101,7 +101,7 @@ public class GoGameState extends GameInfo
         return true;
     }
 
-    void updateProposal(int x, int y){
+    public void updateProposal(int x, int y){
         //althernate the color of a spot between blank, black, and white
         int newColor = (territoryProposal[x][y]+2)%3 -1;
         //an array for which spots need to be updated based on the new input
