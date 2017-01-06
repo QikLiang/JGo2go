@@ -12,11 +12,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import action.PutPieceAction;
-import main.Game;
 import main.GoGameState;
 import main.Log;
-import players.GamePlayer;
 
 class BoardGraphics extends JPanel implements MouseListener {
 	
@@ -51,8 +48,8 @@ class BoardGraphics extends JPanel implements MouseListener {
 	}
 	
 	public void paint(Graphics g){
+		Log.i("BoardGraphics", "drawing");
 		if (texture != null){
-			Log.i("BoardGraphics", "drawing");
 			g.drawImage(texture, 0 ,0, SIZE, SIZE, null);
 		}
 			

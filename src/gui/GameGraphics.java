@@ -4,7 +4,9 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -29,6 +31,9 @@ public class GameGraphics extends JFrame {
 	private static final long serialVersionUID = -508624359020760549L;
 	private BoardGraphics board;
 	
+	private TurnIcon blackBowl;
+	private TurnIcon whiteBowl;
+	
 	JLabel captured0;//stones captured by player 0
 	JLabel captured1;//stones captured by player 1
 	JButton buttonTop;
@@ -45,6 +50,13 @@ public class GameGraphics extends JFrame {
 	
 	public GameGraphics(String[] names, Game initGame, GamePlayer initPlayer, int initPlayerNum){
 		super("Go2go");
+
+		try {
+			whiteBowl = new TurnIcon(ImageIO.read(getClass().getResource("/whitebowl.png")));
+			blackBowl = new TurnIcon(ImageIO.read(getClass().getResource("/blackbowl.png")));
+		} catch (IOException e) {
+			Log.i("GameGraphics", "Bowl images not found");
+		}
 
 		game = initGame;
 		player = initPlayer;
@@ -83,9 +95,11 @@ public class GameGraphics extends JFrame {
 		panel.add(stats);
 
 		stats.add(Box.createHorizontalGlue());
+		stats.add(blackBowl);
 		stats.add(p0Stat);
 		stats.add(buttons);
 		stats.add(p1Stat);
+		stats.add(whiteBowl);
 		stats.add(Box.createHorizontalGlue());
 		
 		p0Stat.add(Box.createVerticalGlue());
@@ -128,6 +142,9 @@ public class GameGraphics extends JFrame {
 		
         buttonTop.setEnabled(state.getTurn()==playerNum);
         buttonBottom.setEnabled(state.getTurn()==playerNum);
+        
+        blackBowl.setShown(state.getTurn()==0);
+        whiteBowl.setShown(state.getTurn()==1);
 		
 		//update gui for stage
         if(state.getStage() == GoGameState.SELECT_TERRITORY_STAGE) {
