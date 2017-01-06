@@ -23,7 +23,7 @@ class BoardGraphics extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1578137049156915447L;
 	static final int SIZE = 600;
 	//radius of a go piece 20 because there's 9 rows and columns and
-	//half that to change diameter to radius, +2 to add margin to edge
+	//half that to change diameter to radius
 	private static final int radius = SIZE / (20);
 	
 	private Image texture;
@@ -51,9 +51,9 @@ class BoardGraphics extends JPanel implements MouseListener {
 			//board grid
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setStroke(new BasicStroke(3));
-			for(int i = radius; i<SIZE; i+=2*radius){
-				g2.drawLine(radius, i, SIZE - radius, i);
-				g2.drawLine(i, radius, i, SIZE - radius);
+			for(int i = 2*radius; i<SIZE-radius; i+=2*radius){
+				g2.drawLine(2*radius, i, SIZE - 2*radius, i);
+				g2.drawLine(i, 2*radius, i, SIZE - 2*radius);
 			}
 			
 			//pieces
@@ -65,11 +65,11 @@ class BoardGraphics extends JPanel implements MouseListener {
 					switch (goBoard[x][y]){
 					case GoGameState.BLACK:
 						g.setColor(Color.BLACK);
-						g.fillOval( (2*x)*radius, (2*y)*radius, 2*radius, 2*radius );
+						g.fillOval( (2*x+1)*radius, (2*y+1)*radius, 2*radius, 2*radius );
 						break;
 					case GoGameState.WHITE:
 						g.setColor(Color.WHITE);
-						g.fillOval( (2*x)*radius, (2*y)*radius, 2*radius, 2*radius );
+						g.fillOval( (2*x+1)*radius, (2*y+1)*radius, 2*radius, 2*radius );
 						break;
 					}
 				}
@@ -78,7 +78,7 @@ class BoardGraphics extends JPanel implements MouseListener {
 			//previous move
 			if(prevX>=0){
 				g.setColor(Color.gray);
-				g.fillOval( (2*prevX)*radius+2*radius/3, (2*prevY)*radius+2*radius/3, 2*radius/3, 2*radius/3 );
+				g.fillOval( (2*prevX+1)*radius+2*radius/3, (2*prevY+1)*radius+2*radius/3, 2*radius/3, 2*radius/3 );
 			}
 		}
 	}
@@ -98,7 +98,22 @@ class BoardGraphics extends JPanel implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent event) {
-		Log.i("BoardGraphics clicked", event.getX()/(2*radius)+","+event.getY()/(2*radius));
+		//ignore top and left boarder clicks
+		int x = event.getX();
+		int y = event.getY();
+		if (x < radius || y < radius){
+			return;
+		}
+		
+		//convert from screen coordinate to board coordinate
+		x = ( (x/radius)-1 ) / 2;
+		y = ( (y/radius)-1 ) / 2;
+		
+		//ignore bottom and right clicks
+		if (x>=GoGameState.boardSize || y>=GoGameState.boardSize){
+			return;
+		}
+		Log.i("BoardGraphics clicked", x+","+y);
 	}
 
 	@Override
