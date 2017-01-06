@@ -75,9 +75,22 @@ public class GameGraphics extends JFrame {
 		board.setGoBoard(state.getBoard());
 		board.setProposal(state.getTerritoryProposal());
 		board.setPrevMove(state.getPrevX(), state.getPrevY());
+		captured0.setText(capturedText(state.getWhiteCaptures()));
+		captured1.setText(capturedText(state.getBlackCaptures()));
 		
 		revalidate();
 		board.repaint();
+	}
+	
+	private String capturedText(int score){
+		switch (score){
+		case 0:
+			return "Captured no pieces";
+		case 1:
+			return "Captured 1 piece";
+			default:
+				return "Captured " + score + " pieces";
+		}
 	}
 	
 }

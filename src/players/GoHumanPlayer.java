@@ -17,9 +17,6 @@ public class GoHumanPlayer extends GamePlayer{// implements View.OnTouchListener
     //GoSurfaceView surfaceView;
     GoGameState state;
 
-    private int[][] originalTerritoryProposal;
-
-
     public GoHumanPlayer(String name) {
         super(name);
     }
@@ -38,8 +35,6 @@ public class GoHumanPlayer extends GamePlayer{// implements View.OnTouchListener
         }
 
         state = (GoGameState) info;
-
-        originalTerritoryProposal = GoGameState.boardDeepCopy(state.getTerritoryProposal());
 
         if(state.getStage() == GoGameState.SELECT_TERRITORY_STAGE || state.getStage() == GoGameState.AGREE_TERRITORY_STAGE){
             if(state.getTerritoryProposal() == null){

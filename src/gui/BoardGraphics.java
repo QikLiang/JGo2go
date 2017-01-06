@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -13,7 +15,7 @@ import javax.swing.JPanel;
 import main.GoGameState;
 import main.Log;
 
-class BoardGraphics extends JPanel {
+class BoardGraphics extends JPanel implements MouseListener {
 	
 	/**
 	 * 
@@ -28,10 +30,6 @@ class BoardGraphics extends JPanel {
 	
 	//variables from game state
 	private int[][] goBoard;
-	public int[][] getGoBoard() {
-		return goBoard;
-	}
-
 	private int[][] proposal;
 	private int prevX = -1;
 	private int prevY = -1;
@@ -42,6 +40,7 @@ class BoardGraphics extends JPanel {
 		} catch (IOException e) {
 			Log.i("BoardGraphics", "goodwood.jpg not found");
 		}
+		addMouseListener(this);
 	}
 	
 	public void paint(Graphics g){
@@ -75,6 +74,12 @@ class BoardGraphics extends JPanel {
 					}
 				}
 			}
+			
+			//previous move
+			if(prevX>=0){
+				g.setColor(Color.gray);
+				g.fillOval( (2*prevX)*radius+2*radius/3, (2*prevY)*radius+2*radius/3, 2*radius/3, 2*radius/3 );
+			}
 		}
 	}
 
@@ -89,6 +94,35 @@ class BoardGraphics extends JPanel {
 	public void setPrevMove(int x, int y) {
 		this.prevX = x;
 		this.prevY = y;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent event) {
+		Log.i("BoardGraphics clicked", event.getX()/(2*radius)+","+event.getY()/(2*radius));
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

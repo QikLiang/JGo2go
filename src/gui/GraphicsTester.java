@@ -15,15 +15,15 @@ public class GraphicsTester {
 		gg.startGraphics();
 		GoGameState state = new GoGameState();
 		gg.setState(state);
-		Log.i("Graphics Tester", "empty board set");
 		try { Thread.sleep(2000); } catch (InterruptedException e) { }
-		state.updateBoard(0, 0, 0);
+		state.updateBoard(0, 0, 1);
 		gg.setState(state);
-		Log.i("Graphics Tester", "1st piece set");
 		try { Thread.sleep(2000); } catch (InterruptedException e) { }
-		state.updateBoard(1, 0, 1);
+		state.updateBoard(1, 0, 0);
 		gg.setState(state);
-		Log.i("Graphics Tester", "2nd piece set");
+		try { Thread.sleep(2000); } catch (InterruptedException e) { }
+		state.updateBoard(0, 1, 0);
+		gg.setState(state);
 	}
 
 }
