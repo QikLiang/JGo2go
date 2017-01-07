@@ -49,7 +49,7 @@ public class GameGraphics extends JFrame {
 	private int[][] originalTerritoryProposal;
 	
 	public GameGraphics(String[] names, Game initGame, GamePlayer initPlayer, int initPlayerNum){
-		super("Go2go");
+		super("Go2go - " + names[initPlayerNum]);
 
 		try {
 			whiteBowl = new TurnIcon(ImageIO.read(getClass().getResource("/whitebowl.png")));

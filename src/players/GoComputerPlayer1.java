@@ -213,4 +213,9 @@ public class GoComputerPlayer1 extends GamePlayer {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public String toString(){
+		return "Smart AI";
+	}
 }

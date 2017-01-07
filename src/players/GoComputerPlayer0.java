@@ -95,4 +95,9 @@ public class GoComputerPlayer0 extends GamePlayer {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public String toString(){
+		return "Random AI";
+	}
 }

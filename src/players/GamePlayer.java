@@ -62,6 +62,11 @@ public abstract class GamePlayer {
 		
 	}
 
+	/**
+	 * require toString to be overriden so the start graphics can show it 
+	 * properly in combo box
+	 */
+	public abstract String toString();
 
 	/**
 	 * Thread for dispatching info from game

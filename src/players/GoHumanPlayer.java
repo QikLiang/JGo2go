@@ -59,4 +59,9 @@ public class GoHumanPlayer extends GamePlayer{
 	public boolean supportsGui() {
 		return true;
 	}
+	
+	@Override
+	public String toString(){
+		return "Human Player";
+	}
 }
