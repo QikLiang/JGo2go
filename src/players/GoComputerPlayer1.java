@@ -12,6 +12,7 @@ import action.PassAction;
 import action.PutPieceAction;
 import action.SelectTerritoryAction;
 import gameMsg.GameInfo;
+import gui.GameGraphics;
 
 /**
  * AI based on a mini-max system
@@ -20,8 +21,11 @@ import gameMsg.GameInfo;
 
 //100% not tested, might not even compile
 public class GoComputerPlayer1 extends GamePlayer {
-    public GoComputerPlayer1(String name) {
-        super(name);
+	
+	private GameGraphics graphics;
+	
+    public GoComputerPlayer1(String name, boolean useGui) {
+        super(name, useGui);
     }
 
     //obvious start to this method copied from Qi's simple computer player
@@ -32,6 +36,11 @@ public class GoComputerPlayer1 extends GamePlayer {
             return;
         }
         GoGameState state = (GoGameState) info;
+
+        if(graphics!=null){//update graphics if graphics exists
+        	graphics.setState(state);
+        }
+
         //returns if it's not the computer's turn
         if (state.getTurn() != playerNum) {
             return;
@@ -211,9 +220,16 @@ public class GoComputerPlayer1 extends GamePlayer {
 	@Override
 	public boolean supportsGui() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	
+	@Override
+    protected void initAfterReady(){
+		if(hasGui){
+			graphics = new GameGraphics(allPlayerNames, game, this, playerNum);
+		}
+    }
+
 	@Override
 	public String toString(){
 		return "Smart AI";

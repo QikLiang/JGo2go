@@ -31,9 +31,11 @@ public abstract class GamePlayer {
 	private LinkedBlockingQueue<GameInfo> queue;
 	private PlayerThread pt;
 	public boolean gameOver;
+	protected boolean hasGui;
 	
-	public GamePlayer(String name){
+	public GamePlayer(String name, boolean initGui){
 		this.name = name;
+		hasGui = initGui;
 		queue = new LinkedBlockingQueue<>();
 		pt = new PlayerThread();
 	}

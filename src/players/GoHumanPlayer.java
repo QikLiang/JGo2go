@@ -15,8 +15,8 @@ public class GoHumanPlayer extends GamePlayer{
     boolean firstTime = true;
     GameGraphics graphics;
 
-    public GoHumanPlayer(String name) {
-        super(name);
+    public GoHumanPlayer(String name, boolean useGui) {
+        super(name, useGui);
     }
 
     @Override

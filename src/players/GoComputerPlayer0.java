@@ -10,6 +10,7 @@ import action.PassAction;
 import action.PutPieceAction;
 import action.SelectTerritoryAction;
 import gameMsg.GameInfo;
+import gui.GameGraphics;
 
 
 /**
@@ -17,8 +18,11 @@ import gameMsg.GameInfo;
  */
 
 public class GoComputerPlayer0 extends GamePlayer {
-    public GoComputerPlayer0(String name) {
-        super(name);
+
+	private GameGraphics graphics;
+
+    public GoComputerPlayer0(String name, boolean useGui) {
+        super(name, useGui);
     }
 
     @Override
@@ -30,6 +34,10 @@ public class GoComputerPlayer0 extends GamePlayer {
         }
 
         GoGameState state = (GoGameState) info;
+
+        if(graphics!=null){//update graphics if graphics exists
+        	graphics.setState(state);
+        }
 
         //not it's business if it's not its turn
         if(state.getTurn()!=playerNum){
@@ -93,9 +101,16 @@ public class GoComputerPlayer0 extends GamePlayer {
 	@Override
 	public boolean supportsGui() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	
+	@Override
+    protected void initAfterReady(){
+		if(hasGui){
+			graphics = new GameGraphics(allPlayerNames, game, this, playerNum);
+		}
+    }
+
 	@Override
 	public String toString(){
 		return "Random AI";

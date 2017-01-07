@@ -91,8 +91,8 @@ public class SelectPlayer {
 		private JComboBox<GamePlayer> type;
 		private JCheckBox gui;
 		
-		private final GamePlayer[] playerTypes = { new GoHumanPlayer(""),
-				new GoComputerPlayer0(""), new GoComputerPlayer1("") };
+		private final GamePlayer[] playerTypes = { new GoHumanPlayer("", false),
+				new GoComputerPlayer0("", false), new GoComputerPlayer1("", false) };
 
 		public GuiRow(){
 			row = Box.createHorizontalBox();
@@ -141,11 +141,11 @@ public class SelectPlayer {
 		public GamePlayer makePlayer(){
 			GamePlayer player = (GamePlayer)type.getSelectedItem();
 			if(player instanceof GoHumanPlayer){
-				return new GoHumanPlayer(name.getText());
+				return new GoHumanPlayer(name.getText(), gui.isSelected());
 			}else if(player instanceof GoComputerPlayer0){
-				return new GoComputerPlayer0(name.getText());
+				return new GoComputerPlayer0(name.getText(), gui.isSelected());
 			}else{
-				return new GoComputerPlayer1(name.getText());
+				return new GoComputerPlayer1(name.getText(), gui.isSelected());
 			}
 		}
 		
