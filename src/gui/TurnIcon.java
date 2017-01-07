@@ -12,14 +12,16 @@ class TurnIcon extends Panel {
 	 */
 	private static final long serialVersionUID = 1073189194007240257L;
 	
-	public static final int WIDTH = 70;
-	public static final int HEIGHT = 50;
+	public static final int WIDTH = 90;
+	public static final int HEIGHT = (int)(WIDTH*0.8);
 	private Image icon;
 	private boolean show = false;
 
 	public TurnIcon(Image icon){
 		this.icon = icon;
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		setMinimumSize(new Dimension(WIDTH, HEIGHT));
+		setMaximumSize(new Dimension(WIDTH, HEIGHT));
 	}
 	
 	public void paint(Graphics g){

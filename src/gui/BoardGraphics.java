@@ -21,7 +21,7 @@ class BoardGraphics extends JPanel implements MouseListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1578137049156915447L;
-	static final int SIZE = 600;
+	static final int SIZE = 800;
 	//radius of a go piece 20 because there's 9 rows and columns and
 	//half that to change diameter to radius
 	private static final int radius = SIZE / (20);
