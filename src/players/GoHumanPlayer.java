@@ -1,6 +1,5 @@
 package players;
 
-import action.GameAction;
 import main.GoGameState;
 import gameMsg.GameInfo;
 import gameMsg.IllegalMoveInfo;
