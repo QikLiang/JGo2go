@@ -11,6 +11,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -60,6 +61,12 @@ public class SelectPlayer {
 		start.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				//warn user if no gui is selected
+				if(!row1.gui.isSelected() && !row2.gui.isSelected()){
+					JOptionPane.showMessageDialog(window, "There must be at least one "
+							+"GUI so that the user can close this game");
+					return;
+				}
 				synchronized(start){
 					start.notifyAll();
 				}
