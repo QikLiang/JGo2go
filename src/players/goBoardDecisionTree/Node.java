@@ -31,19 +31,23 @@ class Node {
 		this.prevMove = prevMove;
 		this.state = state;
 		this.index = index;
-		score = evaluateScore();
+		evaluateScore();
 	}
 	
     /**
      * evaluate the board to see how advantageous the position is for the player to move
      * @return positive if favorable to player to move, negative otherwise
      */
-    protected double evaluateScore(){
-        int score = state.getWhiteCaptures() - state.getBlackCaptures();
+    private void evaluateScore(){
+        score = state.getWhiteCaptures() - state.getBlackCaptures();
         if(state.getTurn()!=0){
             score *= -1;
         }
-        return score;
+        
+        //discourage AI from randomly passing in the middle of the game
+        if(prevMove instanceof PassAction){
+        	score-=0.8;
+        }
     }
 
     /**
@@ -102,7 +106,7 @@ class Node {
 		//get best outcome's score
 		double tempScore;
 		bestOutcome = outcomes.get(0);
-		score = bestOutcome.score;
+		score = -bestOutcome.score;
 		for(int i = 0; i<outcomes.size(); i++){
 			tempScore = -outcomes.get(i).score;
 			if(tempScore < score){

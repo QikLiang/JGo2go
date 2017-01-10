@@ -30,28 +30,30 @@ public class GoComputerPlayer2 extends GamePlayer {
 
         GoGameState state = (GoGameState) info;
 
+        //returns if it's not the computer's turn
+        if (state.getTurn() != playerNum) {
+            return;
+        }
+
         //Determines the move if it's time in the game to place a stone
         if(state.getStage() == GoGameState.MAKE_MOVE_STAGE) {
         	//pass if other player passes
         	if(state.getTurnsPassed()>0){
         		game.sendAction(new PassAction(this));
         	}else{
-        		if(state.getTurn()==playerNum){
-        			tree.moveMade(state);
-					long startTime = System.currentTimeMillis();
-					while(System.currentTimeMillis()-startTime < 2000){
-						tree.compute();
-					}
-					GameAction action =tree.pollBestMove();
-					if(action instanceof PassAction){
-						game.sendAction(new PassAction(this));
-					}else{
-						PutPieceAction move = (PutPieceAction) action;
-						game.sendAction(new PutPieceAction(this, move.getX(), move.getY()));
-					}
-        		}
+				tree.moveMade(state);
+				long startTime = System.currentTimeMillis();
+				while(System.currentTimeMillis()-startTime < 2000){
+					tree.compute();
+				}
+				GameAction action =tree.pollBestMove();
+				if(action instanceof PassAction){
+					game.sendAction(new PassAction(this));
+				}else{
+					PutPieceAction move = (PutPieceAction) action;
+					game.sendAction(new PutPieceAction(this, move.getX(), move.getY()));
+				}
         	}
-        	return;
         }
 
         //always agree to other player's proposal
