@@ -1,14 +1,12 @@
 package players.goBoardDecisionTree;
 
 import action.GameAction;
-import action.PassAction;
 import action.PutPieceAction;
 import main.GoGameState;
 
 public class Tree {
 
 	private Node root;
-	private int depth;//depth of the current tree
 	//node to keep track of progress while performing breath first search
 	//through the decision space of the root game state
 	private Node currentNode;
@@ -112,13 +110,36 @@ public class Tree {
 			if(currentBranch.index<root.outcomes.size()-1){
 				currentBranch = root.outcomes.get(currentBranch.index+1);
 				currentNode = currentBranch;
+			}//go to the next level if all branches are completed
+			else{
+				currentBranch = root.outcomes.get(0);
+				currentNode = currentBranch.getMin();
 			}
 		}//move node to next branch of parent otherwise
 		else{
-			currentNode = currentNode.parent.outcomes.get(currentBranch.index+1);
+			//if currentNode is the branch, move the branch also
+			if(currentNode==currentBranch){
+				currentBranch = root.outcomes.get(currentBranch.index+1);
+				currentNode = currentBranch;
+			}else{//otherwise, just move currentNode
+				currentNode = currentNode.parent.outcomes.get(currentNode.index+1);
+			}
 		}
 		
 		//move to leaf of the sub-tree
 		currentNode = currentNode.getMin();
+	}
+	
+	/**
+	 * calculate the depth based on how deep is the min node
+	 */
+	public int getDepth(){
+		Node node = root;
+		int depth = 0;
+		while(node.outcomes!=null){
+			depth++;
+			node = node.outcomes.get(0);
+		}
+		return depth;
 	}
 }

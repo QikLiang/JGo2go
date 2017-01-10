@@ -46,6 +46,7 @@ public class GoComputerPlayer2 extends GamePlayer {
 				while(System.currentTimeMillis()-startTime < 2000){
 					tree.compute();
 				}
+				Log.i("DecisionTree", "depth: "+ tree.getDepth());
 				GameAction action =tree.pollBestMove();
 				if(action instanceof PassAction){
 					game.sendAction(new PassAction(this));

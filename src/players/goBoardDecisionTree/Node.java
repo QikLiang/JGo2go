@@ -44,10 +44,21 @@ class Node {
             score *= -1;
         }
         
+        double offset = 0; //offset score based on heuristics
+        
         //discourage AI from randomly passing in the middle of the game
         if(prevMove instanceof PassAction){
-        	score-=0.8;
+        	offset-=0.8;
+        }else if (prevMove instanceof PutPieceAction){
+        	//value moves in the center of the board more
+            int center = (GoGameState.boardSize)/2;
+            PutPieceAction move = (PutPieceAction) prevMove;
+			offset -= Math.sqrt( (move.getX()-center)*(move.getX()-center)+
+					(move.getY()-center)*(move.getY()-center) ) /
+					GoGameState.boardSize;
         }
+        
+        score += offset;
     }
 
     /**
@@ -118,8 +129,8 @@ class Node {
 		//propagate new score up the tree
 		Node node = this;
 		while(node.parent != null && -node.score < node.parent.score){
-			node = node.parent;
 			node.parent.score = -node.score;
+			node = node.parent;
 		}
 	}
 	
