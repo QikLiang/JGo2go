@@ -37,6 +37,7 @@ public class GoComputerPlayer2 extends GamePlayer {
         		game.sendAction(new PassAction(this));
         	}else{
         		if(state.getTurn()==playerNum){
+        			tree.moveMade(state);
 					long startTime = System.currentTimeMillis();
 					while(System.currentTimeMillis()-startTime < 2000){
 						tree.compute();
@@ -48,8 +49,6 @@ public class GoComputerPlayer2 extends GamePlayer {
 						PutPieceAction move = (PutPieceAction) action;
 						game.sendAction(new PutPieceAction(this, move.getX(), move.getY()));
 					}
-        		}else{
-					tree.moveMade(state);
         		}
         	}
         	return;
