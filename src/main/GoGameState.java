@@ -165,7 +165,8 @@ public class GoGameState extends GameInfo
      * alternate whose turn it is to move.
      */
     public void changeTurn(){
-        Log.i("change of turn","");turn=1-turn;
+        //Log.i("change of turn","");
+        turn=1-turn;
     }
 
     /**

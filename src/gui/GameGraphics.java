@@ -140,13 +140,11 @@ public class GameGraphics extends JFrame {
 		captured0.setText(capturedText(state.getWhiteCaptures()));
 		captured1.setText(capturedText(state.getBlackCaptures()));
 		
-        buttonTop.setEnabled(state.getTurn()==playerNum);
-        buttonBottom.setEnabled(state.getTurn()==playerNum);
-        
+		//update gui for stage
         blackBowl.setShown(state.getTurn()==0);
         whiteBowl.setShown(state.getTurn()==1);
 		
-		//update gui for stage
+        buttonBottom.setEnabled(state.getTurn()==playerNum);
         if(state.getStage() == GoGameState.SELECT_TERRITORY_STAGE) {
             //stage.setText("select territory");
             buttonTop.setText("submit proposal");
@@ -161,6 +159,7 @@ public class GameGraphics extends JFrame {
             buttonTop.setText("pass");
             buttonBottom.setText("forfeit");
         }
+        buttonTop.setEnabled(state.getTurn()==playerNum);
         
 		revalidate();
 		board.repaint();

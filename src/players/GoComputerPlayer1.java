@@ -93,7 +93,7 @@ public class GoComputerPlayer1 extends GamePlayer {
             boolean yourMove = true;
             int maxDepth = -1;
             //computation limit 10000 board positions
-            while ( 10000>numEvals && yourMoves>0 && opponentMoves>0 ){
+            while ( 1000000>numEvals && yourMoves>0 && opponentMoves>0 ){
                 maxDepth++;
                 if (yourMove){
                     numEvals*=yourMoves;

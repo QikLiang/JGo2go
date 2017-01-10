@@ -63,6 +63,10 @@ public abstract class GamePlayer {
 		//overwritten by sub-class
 		
 	}
+	
+	protected void cleanUpAfterGameOver(){
+		//overwritten by sub-class
+	}
 
 	/**
 	 * require toString to be overriden so the start graphics can show it 
@@ -125,6 +129,8 @@ public abstract class GamePlayer {
 					
 					// set our instance variable, to indicate the game as over
 					gameOver = true;
+					
+					cleanUpAfterGameOver();
 				}
 				else {
 					// pass the state on to the subclass
