@@ -79,6 +79,7 @@ public class Tree {
 				PutPieceAction ppa = (PutPieceAction) root.outcomes.get(i).prevMove;
 				if(ppa.getX()==state.getPrevX() && ppa.getY()==state.getPrevY()){
 					moveIndex = i;
+					break;
 				}
 			}
 		}

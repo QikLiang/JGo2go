@@ -2,6 +2,8 @@ package players;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
+import javax.swing.JOptionPane;
+
 import action.GameOverAckAction;
 import action.MyNameIsAction;
 import action.ReadyAction;
@@ -122,7 +124,7 @@ public abstract class GamePlayer {
 					// if we're being notified the game is over, finish up
 					
 					// perform the "gave over" behavior--by default, to show pop-up message
-					//gameIsOver(((GameOverInfo)myInfo).getMessage());
+					JOptionPane.showMessageDialog(null, ((GameOverInfo)myInfo).getMessage());
 					
 					// acknowledge to the game that the game is over
 					game.sendAction(new GameOverAckAction(GamePlayer.this));

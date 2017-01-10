@@ -56,6 +56,9 @@ class Node {
 			offset -= Math.sqrt( (move.getX()-center)*(move.getX()-center)+
 					(move.getY()-center)*(move.getY()-center) ) /
 					GoGameState.boardSize;
+
+			//randomize moves
+			offset *= Math.random();
         }
         
         score += offset;
@@ -84,7 +87,7 @@ class Node {
 				if(temp.updateBoard(state.getTurn(), i, j)){
 					temp.changeTurn();
 					outcomes.add( new Node(this, new PutPieceAction(null, i, j),
-							pass, outcomes.size()) );
+							temp, outcomes.size()) );
 				}
 			}
 		}

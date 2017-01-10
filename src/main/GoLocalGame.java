@@ -13,11 +13,6 @@ import players.GamePlayer;
  */
 
 public class GoLocalGame extends LocalGame {
-	
-	// the players in the game, in order of  player number
-	protected GamePlayer[] players;
-	// the players' names, paralleling the 'players' array
-	protected String[] playerNames;
 
     GoGameState officialState;
     private boolean gameEnded;
